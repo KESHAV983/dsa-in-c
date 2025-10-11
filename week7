@@ -1,0 +1,124 @@
+#include <stdio.h>
+#define MAX 100
+
+int stack[MAX];
+int top = -1;
+
+void push(int x) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow\n");
+    } else {
+        top++;
+        stack[top] = x;
+        printf("Pushed %d\n", x);
+    }
+}
+
+void pop() {
+    if (top == -1) {
+        printf("Stack Underflow\n");
+    } else {
+        printf("Popped %d\n", stack[top]);
+        top--;
+    }
+}
+
+void display() {
+    if (top == -1) {
+        printf("Stack is empty\n");
+    } else {
+        int i;
+        printf("Stack elements:\n");
+        for (i = 0; i <= top; i++) {
+            printf("%d ", stack[i]);
+        }
+        printf("\n");
+    }
+}
+
+void checkPalindrome() {
+    int n, i, x, tempTop = -1;
+    int tempStack[MAX], arr[MAX];
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    if (n > MAX) {
+        printf("Too many elements\n");
+        return;
+    }
+
+    for (i = 0; i < n; i++) {
+        printf("Enter element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    for (i = 0; i < n; i++) {
+        tempTop++;
+        tempStack[tempTop] = arr[i];
+    }
+
+    for (i = 0; i < n; i++) {
+        x = tempStack[tempTop];
+        tempTop--;
+        if (x != arr[i]) {
+            printf("Not Palindrome\n");
+            return;
+        }
+    }
+
+    printf("Palindrome\n");
+}
+
+int main() {
+    int choice, val;
+
+    while (1) {
+        printf("\n1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Check Palindrome\n");
+        printf("4. Overflow/Underflow Demo\n");
+        printf("5. Display Stack\n");
+        printf("6. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value: ");
+                scanf("%d", &val);
+                push(val);
+                break;
+
+            case 2:
+                pop();
+                break;
+
+            case 3:
+                checkPalindrome();
+                break;
+
+            case 4:
+                if (top == MAX - 1)
+                    printf("Overflow\n");
+                else
+                    printf("Not Overflow\n");
+
+                if (top == -1)
+                    printf("Underflow\n");
+                else
+                    printf("Not Underflow\n");
+                break;
+
+            case 5:
+                display();
+                break;
+
+            case 6:
+                return 0;
+
+            default:
+                printf("Wrong choice\n");
+        }
+    }
+}
