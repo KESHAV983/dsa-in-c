@@ -1,0 +1,62 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+ 
+void readString(char *prompt, char *str, int maxLen) {     printf("%s", prompt);     int i = 0, ch; 
+    while (i < maxLen - 1 && (ch = getchar()) != '\n' && ch != EOF) {         str[i++] = (char)ch; 
+    } 
+    str[i] = '\0'; 
+} 
+ 
+int strLength(char *str) { 
+    int len = 0; 
+    while (str[len] != '\0') len++;     return len; 
+} 
+ 
+int matchAt(char *str1, char *str2, int pos) {     int i = 0;     while (str2[i] != '\0') { 
+        if (str1[pos + i] == '\0' || str1[pos + i] != str2[i])             return 0;         i++; 
+    } 
+    return 1; 
+} 
+ 
+int findPattern(char *str, char *pattern, int *indices, int maxIndices) {     int count = 0;     int strLen = strLength(str);     int patLen = strLength(pattern);     for (int i = 0; i <= strLen - patLen; i++) {         if (matchAt(str, pattern, i)) {             if (count < maxIndices) { 
+                indices[count] = i; 
+            } 
+            count++; 
+        } 
+    } 
+    return count; 
+} 
+ 
+void replaceAll(char *str, char *pattern, char *replacement, char *output) {     int strLen = strLength(str);     int patLen = strLength(pattern); 
+    int repLen = strLength(replacement); 
+ 
+    int i = 0, j = 0;     while (str[i] != '\0') { 
+        if (matchAt(str, pattern, i)) {             for (int k = 0; k < repLen; k++) {                 output[j++] = replacement[k]; 
+            } 
+            i += patLen; 
+        } else { 
+            output[j++] = str[i++]; 
+        } 
+    } 
+    output[j] = '\0'; 
+} 
+ 
+int main() { 
+    char STR[500], PAT[100], REP[100];     int indices[100]; 
+ 
+    // a 
+    readString("Enter main string: ", STR, 500);     readString("Enter pattern string: ", PAT, 100);     readString("Enter replace string: ", REP, 100); 
+ 
+    // b 
+    int count = findPattern(STR, PAT, indices, 100); 
+ 
+    if (count == 0) { 
+        printf("Pattern not found in the main string.\n"); 
+    } else { 
+        char output[1000]; 
+        replaceAll(STR, PAT, REP, output); 
+        printf("After replacing all occurrences:\n%s\n", output); 
+    } 
+ 
+    return 0; 
+}
