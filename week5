@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct Day {
+char *name;
+int date;
+char *activity;
+};
+struct Day* create() {
+struct Day* calendar = (struct Day*)malloc(WEEK_DAYS * sizeof(struct Day));
+return calendar;
+}
+void read(struct Day* calendar) {
+char buffer[100];
+for (int i = 0; i < WEEK_DAYS; i++) {
+printf("Enter name of day %d: ", i+1);
+scanf("%s", buffer);
+calendar[i].name = (char*)malloc(strlen(buffer)+1);
+strcpy(calendar[i].name, buffer);
+printf("Enter date for %s: ", calendar[i].name);
+scanf("%d", &calendar[i].date);
+printf("Enter activity for %s: ", calendar[i].name);
+scanf(" %[^"]", buffer);
+calendar[i].activity = (char*)malloc(strlen(buffer)+1);
+strcpy(calendar[i].activity, buffer);
+}
+}
+void display(struct Day* calendar) {
+printf("
+Week Calendar Report:
+");
+for (int i = 0; i < WEEK_DAYS; i++) {
+printf("Day: %s | Date: %d | Activity: %s
+", calendar[i].name, calendar[i].date, calendar[i].activity);
+}
+}
+int main() {
+printf("DSA Week Calendar Program
+");
+struct Day* weekCalendar = create();
+read(weekCalendar);
+display(weekCalendar);
+for (int i = 0; i < WEEK_DAYS; i++) {
+        free(weekCalendar[i].name);
+        free(weekCalendar[i].activity);
+}
+free(weekCalendar);
+return 0;
+}
