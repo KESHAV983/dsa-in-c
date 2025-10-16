@@ -1,0 +1,219 @@
+Code (a) : Delete from the beginning/end
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int data;
+struct Node* next;
+};
+struct Node* head = NULL;
+void insert(int value)
+{
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    if (head == NULL)
+    {
+        head = newNode;
+        head->next = head;
+    }
+    else
+    {
+        struct Node *temp = head;
+        while (temp->next != head)
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->next = head;
+    }
+    printf("Inserted %d\n", value);
+}
+void deleteFromBeginning()
+{
+    if (head == NULL)
+    {
+        printf("Error: List is empty, cannot delete from beginning.\n");
+        return;
+    }
+    if (head->next == head)
+    {
+        printf("Deleted %d\n", head->data);
+        free(head);
+        head = NULL;
+        return;
+    }
+    struct Node *temp = head;
+    struct Node *last = head;
+    while (last->next != head)
+    {
+        last = last->next;
+    }
+    printf("Deleted %d\n", head->data);
+    head = head->next;
+    last->next = head;
+    free(temp);
+}
+void deleteFromEnd()
+{
+    if (head == NULL)
+    {
+        printf("Error: List is empty, cannot delete from end.\n");
+        return;
+    }
+    if (head->next == head)
+    {
+        printf("Deleted %d\n", head->data);
+        free(head);
+        head = NULL;
+        return;
+    }
+    struct Node *temp = head;
+    struct Node *prev = NULL;
+    while (temp->next != head)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+    printf("Deleted %d\n", temp->data);
+    prev->next = head;
+    free(temp);
+}
+void display()
+{
+    if (head == NULL)
+    {
+        printf("List is empty.\n");
+        return;
+    }
+    struct Node *temp = head;
+    printf("List: ");
+    do
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != head);
+    printf("\n");
+}
+int main()
+{
+    insert(10);
+    insert(20);
+    insert(30);
+    insert(40);
+    display();
+    deleteFromBeginning();
+    display();
+    deleteFromEnd();
+    display();
+    deleteFromBeginning();
+    display();
+    deleteFromEnd();
+    display();
+    deleteFromBeginning();
+    return 0;
+}
+Code(b) : Delete a given element
+#include <stdio.h>
+          void selectionsort_descending(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int maxIndex = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[j] > arr[maxIndex])
+            {
+                maxIndex = j;
+            }
+        }
+        int temp = arr[i];
+        arr[i] = arr[maxIndex];
+        arr[maxIndex] = temp;
+    }
+}
+void adding_element_in_arrays(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        printf("Enter element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+}
+void display_arrays(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+int main()
+{
+    int n;
+    printf("Enter Size of an Array: ");
+    scanf("%d", &n);
+    int arr[n];
+    adding_element_in_arrays(arr, n);
+    printf("Original Array: ");
+    display_arrays(arr, n);
+    selectionsort_descending(arr, n);
+    printf("Final Array: ");
+    display_arrays(arr, n);
+    return 0;
+}
+Code(c) : Display & Insert is mandatory
+#include <stdio.h>
+#include <stdlib.h>
+          struct Node
+{
+    int data;
+    struct Node *next;
+};
+struct Node *head = NULL;
+void insert(int value)
+{
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode->data = value;
+    if (head == NULL)
+    {
+        head = newNode;
+        head->next = head;
+    }
+    else
+    {
+        struct Node *temp = head;
+        while (temp->next != head)
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->next = head;
+    }
+    printf("Inserted %d\n", value);
+}
+void display()
+{
+    if (head == NULL)
+    {
+        printf("List is empty.\n");
+        return;
+    }
+    struct Node *temp = head;
+    printf("List: ");
+    do
+    {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != head);
+    printf("\n");
+}
+int main()
+{
+    insert(10);
+    insert(20);
+    insert(30);
+    insert(40);
+    display();
+    insert(50);
+    display();
+    insert(60);
+    display();
+    return 0;
+}
